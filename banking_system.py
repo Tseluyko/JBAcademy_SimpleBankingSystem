@@ -17,7 +17,7 @@ class BankSystem:
         self.state = State.MAIN_MENU
         self.session_card_number = ''
         self.session_pin = ''
-        self.session_card = credit_card.CreditCard()
+        self.session_card = None
 
     @staticmethod
     def get_main_menu():
