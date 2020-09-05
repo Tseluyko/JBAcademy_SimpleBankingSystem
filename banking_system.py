@@ -68,7 +68,7 @@ class BankSystem:
         if data == '0':
             exit(0)
         if data == '1':
-            print('Balance: {}'.format(self.session_card.get_balance()))
+            print('Balance: {}'.format(self.session_card[3]))
         if data == '2':
             self.state = State.MAIN_MENU
 
@@ -86,7 +86,7 @@ class BankSystem:
             print('Wrong card number or PIN!')
             self.state = State.MAIN_MENU
             return
-        if not card.check_pin(self.session_pin):
+        if card[2] != self.session_pin:
             print('Wrong card number or PIN!')
             self.state = State.MAIN_MENU
             return

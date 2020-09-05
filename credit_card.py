@@ -38,6 +38,9 @@ class CreditCard:
         number += str(self.checksum)
         return number
 
+    def get_id(self):
+        return self.id
+
     def get_pin(self):
         str_pin = str(self.pin)
         while len(str_pin) < 4:
