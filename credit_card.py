@@ -54,20 +54,5 @@ class CreditCard:
             str_pin = '0' + str_pin
         return str_pin
 
-    def check_number(self, card_number):
-        if len(card_number) != 16:
-            return False
-        mii = int(card_number[0:6])
-        card_id = int(card_number[6:15])
-        checksum = int(card_number[15])
-        if mii != self.mii or card_id != self.id or checksum != self.checksum:
-            return False
-        return True
-
-    def check_pin(self, pin):
-        if int(pin) != self.pin:
-            return False
-        return True
-
     def get_balance(self):
         return self.balance
