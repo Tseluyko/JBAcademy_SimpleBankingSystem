@@ -30,4 +30,40 @@ class CustomerStorage:
         self.db_cursor.execute(f'''SELECT * FROM card WHERE number = {card_number};''')
         return self.db_cursor.fetchone()
 
+    def get_balance(self, card_number):
+        self.db_cursor.execute(f'''SELECT balance FROM card WHERE number = {card_number};''')
+        return self.db_cursor.fetchone()[0]
 
+    def income_money(self, card_number, money):
+        current = int(self.get_balance(card_number))
+        new_balance = current + money
+        self.db_cursor.execute(f'''
+UPDATE card
+SET balance = {new_balance}
+WHERE number = {card_number};
+''')
+        self.db_connect.commit()
+
+    def transfer_money(self, src, dst, value):
+        src_balance = self.get_balance(src)
+        dst_balance = self.get_balance(dst)
+        src_balance -= value
+        dst_balance += value
+        self.db_cursor.execute(f'''
+UPDATE card
+SET balance = {src_balance}
+WHERE number = {src};
+''')
+        self.db_cursor.execute(f'''
+UPDATE card
+SET balance = {dst_balance}
+WHERE number = {dst};
+''')
+        self.db_connect.commit()
+
+    def delete_customer(self, card_number):
+        self.db_cursor.execute(f'''
+DELETE FROM card
+WHERE number = {card_number};   
+''')
+        self.db_connect.commit()

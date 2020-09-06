@@ -6,12 +6,13 @@ class CreditCard:
         self.mii = 400000
         self.id = random.randint(1, 999999999)
         self.checksum = 0
-        self.checksum = self.generate_luhn_checksum()
+        self.checksum = self.generate_luhn_checksum(self.get_card_number())
         self.pin = random.randint(1, 9999)
         self.balance = 0
 
-    def generate_luhn_checksum(self):
-        numbers = self.get_card_number()[:15]
+    @staticmethod
+    def generate_luhn_checksum(card_number):
+        numbers = card_number[:15]
         l_sum = 0
         count = 0
         for num in numbers:
@@ -28,6 +29,12 @@ class CreditCard:
             checksum += 1
             l_sum += 1
         return checksum
+
+    @staticmethod
+    def ctrl_checksum(card_number):
+        calculated = CreditCard.generate_luhn_checksum(card_number)
+        current = int(card_number[15])
+        return calculated == current
 
     def get_card_number(self):
         number = str(self.mii)
